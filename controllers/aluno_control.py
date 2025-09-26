@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from models import db
 from models.aluno import Aluno
 from datetime import datetime 
+from helpers.date_converter import date_converter
+from helpers.age_calculator import age_calculator
 
 aluno_bp = Blueprint("aluno_bp", __name__)
 
@@ -10,9 +12,9 @@ def criar_aluno():
     dados = request.get_json()
     novo_aluno = Aluno(
         nome= dados.get("nome"),
-        idade= dados.get("idade"),
+        idade= age_calculator(date_converter(dados.get("data_nascimento"))),
         turma_id= dados.get("turma_id"),
-        data_nascimento= datetime.strptime(dados.get["data_nascimento"], "%Y-%m-%d").date(),
+        data_nascimento= date_converter(dados.get("data_nascimento")),
         nota_primeiro_semestre= dados.get("nota_primeiro_semestre"),
         nota_segundo_semestre= dados.get("nota_segundo_semestre"),
         media_final= (dados.get("nota_primeiro_semestre") + dados.get("nota_segundo_semestre"))/2 if dados.get("nota_primeiro_semestre") is not None and dados.get("nota_segundo_semestre") is not None else None
