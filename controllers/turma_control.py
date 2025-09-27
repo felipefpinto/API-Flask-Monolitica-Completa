@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy.exc import IntegrityError
 from models import db
 from models.turma import Turma
 
@@ -6,16 +7,21 @@ turma_bp = Blueprint("turma_bp", __name__)
 
 @turma_bp.route('/turmas', methods=['POST']) 
 def criar_turma():
-    dados = request.get_json()
-    nova_turma = Turma(
-        nome= dados.get("nome"),
-        professor_id= dados.get("professor_id"),
-        ativo= dados.get("ativo", True)
-    )
-    db.session.add(nova_turma)
-    db.session.commit()
+    try:
+        dados = request.get_json()
+        nova_turma = Turma(
+            nome= dados.get("nome"),
+            professor_id= dados.get("professor_id"),
+            ativo= dados.get("ativo", True)
+        )
+        db.session.add(nova_turma)
+        db.session.commit()
 
-    return jsonify({"mensagem":"Turma criada com sucesso!"}), 201
+        return jsonify({"mensagem":"Turma criada com sucesso!"}), 201
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"erro": "Professor não encontrado. Verifique o professor_id."})
+
 
 @turma_bp.route('/turmas', methods=['GET'])
 def listar_turmas():
