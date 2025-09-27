@@ -1,6 +1,10 @@
 from datetime import datetime
 
 def date_converter(value):
-    if isinstance(value, str):
-        return datetime.strptime(value, "%Y-%m-%d").date()
-    return value
+    formatos_aceitos = ["%Y-%m-%d", "%Y/%m/%d", "%d-%m%Y", "%d/%m/%Y"]
+
+    for formato in formatos_aceitos:
+        try:
+            return datetime.strptime(value, formato).date()
+        except ValueError:
+            continue
