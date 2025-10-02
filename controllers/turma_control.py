@@ -20,7 +20,7 @@ def criar_turma():
         return jsonify({"mensagem":"Turma criada com sucesso!"}), 201
     except IntegrityError:
         db.session.rollback()
-        return jsonify({"erro": "Professor não encontrado. Verifique o professor_id."})
+        return jsonify({"erro": "Professor não encontrado. Verifique o professor_id."}), 500
 
 
 @turma_bp.route('/turmas', methods=['GET'])

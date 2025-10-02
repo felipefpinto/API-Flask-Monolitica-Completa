@@ -27,7 +27,7 @@ def criar_aluno():
         return jsonify({"mensagem":"Aluno criado com sucesso!"}), 201
     except IntegrityError:
         db.session.rollback()
-        return jsonify({"erro": "Turma não encontrada. Verifique o turma_id."})
+        return jsonify({"erro": "Turma não encontrada. Verifique o turma_id."}), 500
 
 
 @aluno_bp.route('/alunos', methods=['GET'])
