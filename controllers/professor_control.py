@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy.exc import IntegrityError
 from models import db
 from models.professor import Professor
 
@@ -83,11 +84,15 @@ def update_professor(id_professor):
 # Deletar professor
 @professor_bp.route("/professores/<int:id_professor>", methods=["DELETE"])
 def delete_professor(id_professor):
-    professor = Professor.query.get(id_professor)
-    if not professor:
-        return jsonify({"mensagem": "Professor não encontrado"}), 404
+    try:
+        professor = Professor.query.get(id_professor)
+        if not professor:
+            return jsonify({"mensagem": "Professor não encontrado"}), 404
 
-    db.session.delete(professor)
-    db.session.commit()
+        db.session.delete(professor)
+        db.session.commit()
 
-    return jsonify({"mensagem": "Professor excluído com sucesso"})
+        return jsonify({"mensagem": "Professor excluído com sucesso"})
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"mensagem": "Não é possível excluir o professor, pois ele está associado a uma turma."}), 500
