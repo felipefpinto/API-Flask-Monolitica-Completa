@@ -68,12 +68,18 @@ def atualizar_turma(id_turma):
 
 @turma_bp.route('/turmas/<int:id_turma>', methods=['DELETE'])
 def deletar_turma(id_turma):
-    turma = Turma.query.get(id_turma)
-    if turma:
+    try:
+        turma = Turma.query.get(id_turma)
+        if not turma:
+            return jsonify({"mensagem": "Turma não encontrada"}), 404
         db.session.delete(turma)
         db.session.commit()
+
         return jsonify({"mensagem": "Turma deletada com sucesso!"}), 200
-    return jsonify({"mensagem": "Turma não encontrada."}), 404
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"mensagem": "Não é possível excluir a turma, pois ela está associada a pelo menos um aluno."}), 500
+
 
 
     
