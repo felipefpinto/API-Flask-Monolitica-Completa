@@ -1,0 +1,898 @@
+openapi: 3.1.0
+info:
+  title: API Monolítica em Flask
+  description: Uma API Monolítica para o gerenciamento de aulas de uma escola, criada com Flask e documentada com Swagger.
+  version: 1.0.0
+  contact: {}
+servers:
+- url: http://127.0.0.1
+paths:
+  /alunos:
+    get:
+      tags:
+        - Alunos
+      summary: Retorna todos os alunos
+      description: Este endpoint permite resgatar informações de todos os alunos já criados.
+      operationId: get_alunos
+      responses:
+        '200':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alunos:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        data_nascimento:
+                          type: string
+                          example: Tue, 10 Jan 2006 00:00:00 GMT
+                        id:
+                          type: number
+                          example: 1
+                        idade:
+                          type: number
+                          example: 19
+                        media_final:
+                          type: number
+                          example: 10
+                        nome:
+                          type: string
+                          example: Bianca Almeida
+                        nota_primeiro_semestre:
+                          type: number
+                          example: 10
+                        nota_segundo_semestre:
+                          type: number
+                          example: 10
+                        turma_id:
+                          type: number
+                          example: 1
+                    example:
+                    - data_nascimento: Tue, 10 Jan 2006 00:00:00 GMT
+                      id: 1
+                      idade: 19
+                      media_final: 10
+                      nome: Bianca Almeida
+                      nota_primeiro_semestre: 10
+                      nota_segundo_semestre: 10
+                      turma_id: 1
+                    - data_nascimento: Fri, 20 May 2005 00:00:00 GMT
+                      id: 2
+                      idade: 20
+                      media_final: 9.5
+                      nome: Ana Olivia
+                      nota_primeiro_semestre: 9
+                      nota_segundo_semestre: 10
+                      turma_id: 2
+                  total_alunos:
+                    type: number
+                    example: 2
+              examples:
+                New Request:
+                  value:
+                    alunos:
+                    - data_nascimento: Tue, 10 Jan 2006 00:00:00 GMT
+                      id: 1
+                      idade: 19
+                      media_final: 10
+                      nome: Bianca Almeida
+                      nota_primeiro_semestre: 10
+                      nota_segundo_semestre: 10
+                      turma_id: 1
+                    - data_nascimento: Fri, 20 May 2005 00:00:00 GMT
+                      id: 2
+                      idade: 20
+                      media_final: 9.5
+                      nome: Ana Olivia
+                      nota_primeiro_semestre: 9
+                      nota_segundo_semestre: 10
+                      turma_id: 2
+                    total_alunos: 2
+    post:
+      tags:
+        - Alunos    
+      summary: Cria um novo aluno
+      description: Este endpoint permite o cadastro de um novo(a) aluno(a) com nome, data de nascimento, notas do primeiro e segundo semestre e id da turma na qual ele(a) faz parte.
+      operationId: post_alunos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data_nascimento:
+                  type: string
+                  example: 20/05/2005
+                nome:
+                  type: string
+                  example: Ana Olivia
+                nota_primeiro_semestre:
+                  type: number
+                  example: 9
+                nota_segundo_semestre:
+                  type: number
+                  example: 10
+                turma_id:
+                  type: number
+                  example: 2
+            examples:
+              alunos:
+                value:
+                  data_nascimento: 20/05/2005
+                  nome: Ana Olivia
+                  nota_primeiro_semestre: 9
+                  nota_segundo_semestre: 10
+                  turma_id: 2
+      responses:
+        '201':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Aluno criado com sucesso!
+              examples:
+                New Request:
+                  value:
+                    mensagem: Aluno criado com sucesso!
+  /turmas:
+    get:
+      tags:
+        - Turmas
+      summary: Retorna todas as turmas
+      description: Este endpoint permite resgatar informações de todas as turmas já criadas.
+      operationId: get_turmas
+      responses:
+        '200':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_turmas:
+                    type: number
+                    example: 2
+                  turmas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ativo:
+                          type: boolean
+                          example: true
+                        id:
+                          type: number
+                          example: 1
+                        nome:
+                          type: string
+                          example: Sistemas de Informação - 2A
+                        professor_id:
+                          type: number
+                          example: 1
+                    example:
+                    - ativo: true
+                      id: 1
+                      nome: Sistemas de Informação - 2A
+                      professor_id: 1
+                    - ativo: true
+                      id: 2
+                      nome: Sistemas de Informação - 2A
+                      professor_id: 2
+              examples:
+                New Request:
+                  value:
+                    total_turmas: 2
+                    turmas:
+                    - ativo: true
+                      id: 1
+                      nome: Sistemas de Informação - 2A
+                      professor_id: 1
+                    - ativo: true
+                      id: 2
+                      nome: Sistemas de Informação - 2A
+                      professor_id: 2
+    post:
+      tags:
+        - Turmas
+      summary: Cria uma nova turma
+      description: Este endpoint permite o cadastro de uma nova turma com nome e id do(a) professor(a) que a leciona.
+      operationId: post_turmas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Sistemas de Informação - 2A
+                professor_id:
+                  type: number
+                  example: 2
+            examples:
+              turmas:
+                value:
+                  nome: Sistemas de Informação - 2A
+                  professor_id: 2
+      responses:
+        '201':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Turma criada com sucesso!
+              examples:
+                New Request:
+                  value:
+                    mensagem: Turma criada com sucesso!
+        '404':
+          description: professor não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  erro:
+                    type: string
+                    example: Professor não encontrado. Verifique o professor_id.
+              examples:
+                professor_nao_encontrado:
+                  value:
+                    erro: Professor não encontrado. Verifique o professor_id.
+
+  /professores:
+    get:
+      tags:
+        - Professores
+      summary: Retorna todos os professores
+      description: Este endpoint permite resgatar informações de todos os professores já criados.
+      operationId: get_professores
+      responses:
+        '200':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  professores:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        idade:
+                          type: number
+                          example: 28
+                        materia:
+                          type: string
+                          example: Desenvolvimento Web
+                        nome:
+                          type: string
+                          example: Caio Ireno
+                        obs:
+                          type: string
+                          example: Necessita de laboratório com Node.js instalado
+                    example:
+                    - id: 1
+                      idade: 28
+                      materia: Desenvolvimento Web
+                      nome: Caio Ireno
+                      obs: Necessita de laboratório com Node.js instalado
+                    - id: 2
+                      idade: 28
+                      materia: Desenvolvimento de API e Microsserviços
+                      nome: Giovani Bontempo
+                      obs: Necessita de laboratório com Python instalado
+                  total_professores:
+                    type: number
+                    example: 2
+              examples:
+                New Request:
+                  value:
+                    professores:
+                    - id: 1
+                      idade: 28
+                      materia: Desenvolvimento Web
+                      nome: Caio Ireno
+                      obs: Necessita de laboratório com Node.js instalado
+                    - id: 2
+                      idade: 28
+                      materia: Desenvolvimento de API e Microsserviços
+                      nome: Giovani Bontempo
+                      obs: Necessita de laboratório com Python instalado
+                    total_professores: 2
+    post:
+      tags:
+        - Professores
+      summary: Cria um novo professor
+      description: Este endpoint permite o cadastro de um novo(a) professor(a) com nome, idade, matéria lecionada e observação.
+      operationId: post_professores
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idade:
+                  type: number
+                  example: 28
+                materia:
+                  type: string
+                  example: Desenvolvimento de API e Microsserviços
+                nome:
+                  type: string
+                  example: Giovani Bontempo
+                obs:
+                  type: string
+                  example: Necessita de laboratório com Python instalado
+            examples:
+              professores:
+                value:
+                  idade: 28
+                  materia: Desenvolvimento de API e Microsserviços
+                  nome: Giovani Bontempo
+                  obs: Necessita de laboratório com Python instalado
+      responses:
+        '201':
+          description: New Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Professor criado com sucesso!
+              examples:
+                New Request:
+                  value:
+                    mensagem: Professor criado com sucesso!
+  /alunos/{aluno_id}:
+    get:
+      tags:
+        - Alunos
+      summary: Retorna os dados de um aluno específico
+      description: Este endpoint permite buscar as informações completas de um aluno com base no seu ID.
+      operationId: get_aluno_id
+      parameters:
+        - in: path
+          name: aluno_id
+          description: ID do aluno que se deseja consultar.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Aluno encontrado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados_aluno:
+                    type: object
+                    properties:
+                      data_nascimento:
+                          type: string
+                          example: Tue, 10 Jan 2006 00:00:00 GMT
+                      id:
+                        type: number
+                        example: 1
+                      idade:
+                        type: number
+                        example: 19
+                      media_final:
+                        type: number
+                        example: 10
+                      nome:
+                        type: string
+                        example: Bianca Almeida
+                      nota_primeiro_semestre:
+                        type: number
+                        example: 10
+                      nota_segundo_semestre:
+                        type: number
+                        example: 10
+                      turma_id:
+                        type: number
+                        example: 1
+                  mensagem:
+                    type: string
+                    example: Aluno encontrado com sucesso!
+              examples:
+                aluno_encontrado:
+                  value:
+                    dados_aluno:
+                      data_nascimento: Tue, 10 Jan 2006 00:00:00 GMT
+                      id: 1
+                      idade: 19
+                      media_final: 10
+                      nome: Bianca Almeida
+                      nota_primeiro_semestre: 10
+                      nota_segundo_semestre: 10
+                      turma_id: 1
+                    mensagem: Aluno encontrado com sucesso!
+        '404':
+          description: Aluno não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Aluno não encontrado.
+              examples:
+                aluno_nao_encontrado:
+                  value:
+                    mensagem: Aluno não encontrado.
+
+    put:
+      tags:
+        - Alunos
+      summary: Atualiza os dados de um aluno
+      description: Este endpoint permite atualizar informações cadastrais de um aluno específico usando seu ID.
+      operationId: put_alunos
+      parameters: 
+      - in: path
+        name: aluno_id
+        description: id do aluno que terá seus dados atualizados.
+        required: true
+        schema:
+          type: integer
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Ana Olivia Geraldo
+            examples:
+              alunos:
+                value:
+                  nome: Ana Olivia Geraldo
+      responses:
+        '200':
+          description: alunos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Aluno atualizado com sucesso!
+              examples:
+                alunos:
+                  value:
+                    mensagem: Aluno atualizado com sucesso!
+        '404':
+            description: 'Aluno não encontrado'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Aluno não encontrado.
+                examples:
+                  put_alunos:
+                    value:
+                      mensagem: Aluno não encontrado.
+    delete:
+      tags:
+        - Alunos
+      summary: Remove um aluno do sistema
+      description: Este endpoint exclui permanentemente o registro de um aluno com base no seu ID. A operação é irreversível e deve ser usada com cautela.
+      operationId: delete_alunos
+      parameters: 
+      - in: path
+        name: aluno_id
+        description: id do aluno que terá seus dados atualizados.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 'aluno excluído'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Aluno excluído com sucesso!
+              examples:
+                delete_alunos:
+                  value:
+                    mensagem: Aluno excluído com sucesso!
+        '404':
+            description: 'Aluno não encontrado'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Aluno não encontrado.
+                examples:
+                  delete_alunos:
+                    value:
+                      mensagem: Aluno não encontrado.
+  /turmas/{turma_id}:
+    get:
+      tags:
+        - Turmas
+      summary: Retorna os dados de uma turma específica
+      description: Este endpoint permite buscar as informações completas de uma turma com base no seu ID.
+      operationId: get_turma_id
+      parameters:
+        - in: path
+          name: turma_id
+          description: ID da turma que se deseja consultar.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Turma encontrada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados_turma:
+                    type: object
+                    properties:
+                      ativo:
+                        type: boolean
+                        example: true
+                      id:
+                        type: number
+                        example: 1
+                      nome:
+                        type: string
+                        example: Sistemas de Informação - 2A
+                      professor_id:
+                        type: number
+                        example: 1
+                  mensagem:
+                    type: string
+                    example: Turma encontrada com sucesso!
+              examples:
+                turma_encontrada:
+                  value:
+                    dados_turma:
+                      ativo: true
+                      id: 1
+                      nome: Sistemas de Informação - 2A
+                      professor_id: 1
+                    mensagem: Turma encontrada com sucesso!
+        '404':
+          description: Turma não encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Turma não encontrada.
+              examples:
+                turma_nao_encontrado:
+                  value:
+                    mensagem: Turma não encontrada.
+    put:
+      tags:
+        - Turmas
+      summary: Atualiza os dados de uma turma
+      description: Este endpoint permite atualizar informações cadastrais de uma turma específica usando seu ID.
+      operationId: put_turmas
+      parameters:
+      - in: path
+        name: turma_id
+        description: id da turma que terá seus dados atualizados.
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Análise e Desenvolvimento de Sistemas - 3A
+            examples:
+              turmas:
+                value:
+                  nome: Análise e Desenvolvimento de Sistemas - 3A
+      responses:
+        '200':
+          description: turmas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Turma atualizada com sucesso!
+              examples:
+                turmas:
+                  value:
+                    mensagem: Turma atualizada com sucesso!
+        '404':
+            description: 'turma não encontrada'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Turma não encontrada.
+                examples:
+                  put_turmas:
+                    value:
+                      mensagem: Turma não encontrada.
+    delete:
+      tags:
+        - Turmas
+      summary: Remove uma turma do sistema
+      description: Este endpoint exclui permanentemente o registro de uma turma com base no seu ID. A operação é irreversível e deve ser usada com cautela.
+      operationId: delete_turmas
+      parameters:
+      - in: path
+        name: turma_id
+        description: id da turma que terá seus dados atualizados.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 'turma excluída'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Turma excluída com sucesso!
+              examples:
+                delete_turmas:
+                  value:
+                    mensagem: Turma excluída com sucesso!
+        '404':
+            description: 'turma não encontrada'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Turma não encontrada.
+                examples:
+                  delete_turmas:
+                    value:
+                      mensagem: Turma não encontrada.
+        '500':
+          description: não é possível excluir a turma, pois ela está associada a pelo menos um aluno
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Não é possível excluir a turma, pois ela está associada a pelo menos um aluno.
+              examples:
+                turma_associada:
+                  value:
+                    mensagem: Não é possível excluir a turma, pois ela está associada a pelo menos um aluno.
+  /professores/{professor_id}:
+    get:
+      tags:
+        - Professores
+      summary: Retorna os dados de um professor específico
+      description: Este endpoint permite buscar as informações completas de um professor com base no seu ID.
+      operationId: get_professor_id
+      parameters:
+        - in: path
+          name: professor_id
+          description: ID do professor que se deseja consultar.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Professor encontrado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados_professor:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 2
+                      idade:
+                        type: number
+                        example: 28
+                      materia:
+                        type: string
+                        example: Desenvolvimento de API e Microsserviços
+                      nome:
+                        type: string
+                        example: Giovani Bontempo
+                      obs:
+                        type: string
+                        example: Necessita de laboratório com Python instalado
+                  mensagem:
+                    type: string
+                    example: Professor encontrado com sucesso!
+              examples:
+                professor_encontrado:
+                  value:
+                    dados_professor:
+                      id: 2
+                      idade: 28
+                      materia: Desenvolvimento de API e Microsserviços
+                      nome: Giovani Bontempo
+                      obs: Necessita de laboratório com Python instalado
+                    mensagem: Professor encontrado com sucesso!
+        '404':
+          description: Professor não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Professor não encontrado.
+              examples:
+                professor_nao_encontrado:
+                  value:
+                    mensagem: Professor não encontrado.
+    put:
+      tags:
+        - Professores
+      summary: Atualiza os dados de um professor.
+      description: Este endpoint permite atualizar informações cadastrais de um professor específico usando seu ID.
+      operationId: put_professores
+      parameters:
+        - in: path
+          name: professor_id
+          description: id do professor que terá seus dados atualizados.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idade:
+                  type: number
+                  example: 28
+                obs:
+                  type: string
+                  example: Necessita de laboratório com Node.js instalado
+            examples:
+              professores:
+                value:
+                  idade: 28
+                  obs: Necessita de laboratório com Node.js instalado
+      responses:
+        '200':
+          description: professores
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Dados do professor atualizados com sucesso!
+              examples:
+                professores:
+                  value:
+                    mensagem: Dados do professor atualizados com sucesso!
+        '404':
+            description: 'professor não encontrado'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Professor não encontrado.
+                examples:
+                  put_professores:
+                    value:
+                      mensagem: Professor não encontrado.
+    delete:
+      tags:
+        - Professores
+      summary: Remove um professor do sistema
+      description: Este endpoint exclui permanentemente o registro de um professor com base no seu ID. A operação é irreversível e deve ser usada com cautela.
+      operationId: delete_professores
+      parameters:
+        - in: path
+          name: professor_id
+          description: id do professor que terá seus dados atualizados.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'professor excluído'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Professor excluído com sucesso!
+              examples:
+                delete_professores:
+                  value:
+                    mensagem: Professor excluído com sucesso!
+        '404':
+            description: 'professor não encontrado'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    mensagem:
+                      type: string
+                      example: Professor não encontrado.
+                examples:
+                  delete_professores:
+                    value:
+                      mensagem: Professor não encontrado.
+        '500':
+          description: não é possível excluir o professor, pois ele está associado a uma turma
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: Não é possível excluir o professor, pois ele está associado a uma turma.
+              examples:
+                professor_associado:
+                  value:
+                    mensagem: Não é possível excluir o professor, pois ele está associado a uma turma.
