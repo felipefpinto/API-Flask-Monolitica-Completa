@@ -14,7 +14,7 @@ Este projeto é uma API RESTful monolítica completa desenvolvida com Flask, Pyt
 ## 👨‍💻 Criadores
 
 - [Felipe Fernandes Pinto](https://github.com/felipefpinto / https://www.linkedin.com/in/felipe-fernandes-pinto-39b311129/)  
-- [Maria Oliveira](https://github.com/biancalmds / https://www.linkedin.com/in/biancalmds/)  
+- [Bianca Almeida](https://github.com/biancalmds / https://www.linkedin.com/in/biancalmds/)  
 
 **Principais Características:**
 
@@ -35,11 +35,11 @@ Siga os passos abaixo para configurar e executar o projeto localmente.
 *   Python 3.9+
 *   `pip` (gerenciador de pacotes do Python)
 
-### Passos para Instalação
+### Passos para Instalação 
 
 1.  **Clone o repositório**:
     ```bash
-    git clone https://github.com/seu-usuario/API-Flask-Monolitica-Completa.git
+    git clone https://github.com/felipefpinto/API-Flask-Monolitica-Completa
     cd API-Flask-Monolitica-Completa
     ```
 
@@ -61,6 +61,7 @@ Siga os passos abaixo para configurar e executar o projeto localmente.
     *   `Flask==3.1.2`
     *   `flask_sqlalchemy==3.1.1`
     *   `SQLAlchemy==2.0.43`
+    *   `flask_swagger_ui==5.21.0`
 
 4.  **Inicialize o banco de dados**:
     As tabelas do banco de dados serão criadas automaticamente na primeira execução da aplicação, graças ao `db.create_all()` no `app.py`.
@@ -77,13 +78,20 @@ A API estará disponível em `http://127.0.0.1:5000` (ou outra porta se configur
 
 ## 🐳 Rodando com Docker localmente
 
-### 1. Build da imagem
+### 1. Clonando Repositório
+
+```bash
+    git clone https://github.com/felipefpinto/API-Flask-Monolitica-Completa
+    cd API-Flask-Monolitica-Completa
+    ```
+
+### 2. Build da imagem
 
 ```bash
 docker build -t minha-api .
 ```
 
-### 2. Rodar o container
+### 3. Rodar o container
 
 ```bash
 docker run -p 5000:5000 minha-api
