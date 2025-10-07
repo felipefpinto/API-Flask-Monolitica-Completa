@@ -87,7 +87,7 @@ A API estará disponível em `http://127.0.0.1:5000` (ou outra porta se configur
 
 ### 2. Build da imagem
 
-´´´bash
+```bash
 docker build -t minha-api .
 ```
 
