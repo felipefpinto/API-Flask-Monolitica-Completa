@@ -83,11 +83,11 @@ A API estará disponível em `http://127.0.0.1:5000` (ou outra porta se configur
 ```bash
     git clone https://github.com/felipefpinto/API-Flask-Monolitica-Completa
     cd API-Flask-Monolitica-Completa
-    ```
+```
 
 ### 2. Build da imagem
 
-```bash
+´´´bash
 docker build -t minha-api .
 ```
 
