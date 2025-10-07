@@ -5,10 +5,16 @@
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.43-orange?style=for-the-badge&logo=sqlalchemy)
 ![SQLite](https://img.shields.io/badge/SQLite-database-0769AD?style=for-the-badge&logo=sqlite)
 ![Flasgger](https://img.shields.io/badge/Flasgger-0.9.7.1-purple?style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue?style=for-the-badge&logo=docker)
 
 ## Descrição
 
 Este projeto é uma API RESTful monolítica completa desenvolvida com Flask, Python e SQLAlchemy. Ele foi projetado para gerenciar informações de uma instituição de ensino, incluindo professores, turmas e alunos. A API oferece endpoints para operações CRUD (Criar, Ler, Atualizar, Deletar) para cada uma dessas entidades, com validações e relacionamentos entre elas.
+
+## 👨‍💻 Criadores
+
+- [Felipe Fernandes Pinto](https://github.com/felipefpinto / https://www.linkedin.com/in/felipe-fernandes-pinto-39b311129/)  
+- [Maria Oliveira](https://github.com/biancalmds / https://www.linkedin.com/in/biancalmds/)  
 
 **Principais Características:**
 
@@ -68,6 +74,22 @@ python app.py
 ```
 
 A API estará disponível em `http://127.0.0.1:5000` (ou outra porta se configurada).
+
+## 🐳 Rodando com Docker localmente
+
+### 1. Build da imagem
+
+```bash
+docker build -t minha-api .
+```
+
+### 2. Rodar o container
+
+```bash
+docker run -p 5000:5000 minha-api
+```
+
+---
 
 ### Endpoints da API
 
@@ -187,6 +209,13 @@ API Flask - Monolitica Completa/
 │   ├── aluno.py                # Modelo Aluno
 │   ├── professor.py            # Modelo Professor
 │   └── turma.py                # Modelo Turma
-└── instance/                   # Pasta para arquivos de instância (ex: database.db)
-    └── database.db             # Banco de dados SQLite
+├── instance/                   # Pasta para arquivos de instância (ex: database.db)
+|   └── database.db             # Banco de dados SQLite
+├── Dockerfile                  # Configuração do container Docker
+├── README.MD                   # Documentação do projeto
+|__ static
+    └──doc
+        └── doc_swagger.yaml    # Especificação Swagger/OpenAPI
+
+
 ```
